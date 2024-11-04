@@ -20,7 +20,6 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 Update-Status "Instalando Scoop..."
 $env:SCOOP='C:\scoop'  # Alterne este caminho se desejar instalar em outro diretório
 if (-not (Test-Path -Path $env:SCOOP)) {
-    # Removido: Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
     Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
     Update-Status "Scoop instalado com sucesso."
 } else {
@@ -60,6 +59,9 @@ Update-Status "Commitizen instalado e atualizado."
 
 Update-Status "Instalação concluída!"
 Write-Host "Instalação concluída!"
+
+# Mantenha o console aberto
+Read-Host -Prompt "Pressione Enter para fechar o PowerShell"
 
 # Remove o arquivo de status ao final para sinalizar a conclusão
 Remove-Item $statusFile -ErrorAction SilentlyContinue
