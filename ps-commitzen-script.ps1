@@ -1,5 +1,5 @@
-# Define a política de execução
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+# Define a política de execução, suprimindo a saída
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force -ErrorAction SilentlyContinue
 
 # Instala o Scoop
 Write-Host "Instalando o Scoop..."
