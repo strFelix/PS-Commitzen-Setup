@@ -1,6 +1,6 @@
 [Setup]
 AppName=Commitzen Setup
-AppVersion=2.1
+AppVersion=2.2
 DefaultDirName={pf}\PS-Commitzen-Setup
 OutputDir=.\setup
 OutputBaseFilename=setup
