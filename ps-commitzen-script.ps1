@@ -3,6 +3,7 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force -Err
 
 # Instala o Scoop
 Write-Host "Instalando o Scoop..."
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
 
 # Instala o pipx
@@ -15,10 +16,8 @@ pipx ensurepath
 
 # Instala o commitizen
 Write-Host "Instalando o commitizen..."
+pipx ensurepath
 pipx install commitizen
-
-# Atualiza o commitizen para a versão mais recente
-Write-Host "Atualizando o commitizen..."
 pipx upgrade commitizen
 
 Write-Host "Instalação concluída!"
