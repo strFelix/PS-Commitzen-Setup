@@ -20,7 +20,7 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 Update-Status "Instalando Scoop..."
 $env:SCOOP='C:\scoop'  # Alterne este caminho se desejar instalar em outro diretório
 if (-not (Test-Path -Path $env:SCOOP)) {
-    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+    # Removido: Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
     Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
     Update-Status "Scoop instalado com sucesso."
 } else {
