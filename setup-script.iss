@@ -1,6 +1,6 @@
 [Setup]
 AppName=Commitzen Setup
-AppVersion=2.0
+AppVersion=2.1
 DefaultDirName={userdocs}\commitzen
 DefaultGroupName=Commitzen
 OutputDir=./setup

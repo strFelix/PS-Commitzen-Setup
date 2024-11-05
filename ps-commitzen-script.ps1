@@ -9,10 +9,9 @@ function Is-PackageInstalled {
     return (scoop list | Select-String $packageName) -ne $null
 }
 
-cls
-
 # Instala o Scoop se não estiver instalado
 if (-not (Is-PackageInstalled "scoop")) {
+    cls
     Write-Host "Instalando o Scoop..." -ForegroundColor Green
     Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
 } else {
