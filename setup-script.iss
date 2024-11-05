@@ -1,6 +1,6 @@
 [Setup]
 AppName=Commitzen
-AppVersion=2.3
+AppVersion=2.4
 DefaultDirName={userdocs}\commitzen
 DefaultGroupName=Commitzen
 OutputDir=./setup
@@ -8,6 +8,7 @@ OutputBaseFilename=setup
 Compression=lzma
 SolidCompression=yes
 PrivilegesRequired=lowest
+SetupIconFile=icons/icon1.ico
 
 [Files]
 Source: "ps-commitzen-script.ps1"; DestDir: "{tmp}"; Flags: ignoreversion
