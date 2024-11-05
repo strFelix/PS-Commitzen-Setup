@@ -9,30 +9,48 @@ function Is-PackageInstalled {
     return (scoop list | Select-String $packageName) -ne $null
 }
 
+# Função para verificar se o Scoop está instalado
+function Is-ScoopInstalled {
+    return Test-Path "$env:USERPROFILE\scoop"
+}
+
+cls
+
 # Instala o Scoop se não estiver instalado
-if (-not (Is-PackageInstalled "scoop")) {
-    cls
+if (-not (Is-ScoopInstalled)) {
     Write-Host "Instalando o Scoop..." -ForegroundColor Green
-    Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+    try {
+        Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+        # Write-Host "Scoop instalado com sucesso." -ForegroundColor Green
+    } catch {
+        Write-Host "Erro ao instalar o Scoop: $_" -ForegroundColor Red
+    }
 } else {
-    Write-Host "Scoop já está instalado." -ForegroundColor Green
+    cls
+    Write-Host "Scoop ja esta instalado." -ForegroundColor Green
+} 
+
+# Função para instalar um pacote usando scoop
+function Install-Package {
+    param (
+        [string]$packageName,
+        [string]$installMessage,
+        [string]$alreadyInstalledMessage
+    )
+
+    if (-not (Is-PackageInstalled $packageName)) {
+        Write-Host "$installMessage" -ForegroundColor Green
+        scoop install $packageName
+    } else {
+        Write-Host "$alreadyInstalledMessage" -ForegroundColor Green
+    }
 }
 
 # Instala o Python se não estiver instalado
-if (-not (Is-PackageInstalled "python")) {
-    Write-Host "`Instalando o Python..." -ForegroundColor Green
-    scoop install python
-} else {
-    Write-Host "`Python já está instalado." -ForegroundColor Green
-}
+Install-Package "python" "`nInstalando o Python..." "Python ja esta instalado."
 
 # Instala o pipx se não estiver instalado
-if (-not (Is-PackageInstalled "pipx")) {
-    Write-Host "`Instalando o pipx..." -ForegroundColor Green
-    scoop install pipx
-} else {
-    Write-Host "`npipx já está instalado." -ForegroundColor Green
-}
+Install-Package "pipx" "`nInstalando o pipx..." "Pipx ja esta instalado."
 
 # Garante que o pipx esteja no PATH
 Write-Host "`nConfigurando o pipx no PATH..." -ForegroundColor Green
@@ -40,17 +58,19 @@ pipx ensurepath
 
 # Instala o commitizen se não estiver instalado
 if (-not (pipx list | Select-String "commitizen")) {
-    Write-Host "`Instalando o commitizen..." -ForegroundColor Green
+    Write-Host "`nInstalando o commitizen..." -ForegroundColor Green
     pipx install commitizen
 } else {
-    Write-Host "`commitizen já está instalado." -ForegroundColor Green
+    Write-Host "`nCommitizen ja esta instalado." -ForegroundColor Green
 }
 
-# Atualiza o commitizen
-Write-Host "`Atualizando o commitizen..." -ForegroundColor Green
+# Atualiza o commitzen
+Write-Host "`nAtualizando o commitizen..." -ForegroundColor Green
 pipx upgrade commitizen
 
-Write-Host "`Instalacao concluida!" -ForegroundColor Green
+Write-Host "`nInstalacao concluida!" -ForegroundColor Green
 
-# Espera por uma entrada do usuário antes de fechar
-# Read-Host "Pressione Enter para sair..."
+# Aguarda 5 segundos antes de finalizar
+# Read-Host -prompt "`nPressione Enter para finalizar..."
+Write-Host "`nO script sera finalizado em 5 segundos..." -ForegroundColor Yellow
+Start-Sleep -Seconds 5
