@@ -1,18 +1,18 @@
 [Setup]
 AppName=Commitzen
-AppVersion=2.4
+AppVersion=3.0
 DefaultDirName={userdocs}\commitzen
 DefaultGroupName=Commitzen
-OutputDir=./setup
+OutputDir=../
 OutputBaseFilename=setup
 Compression=lzma
 SolidCompression=yes
 PrivilegesRequired=lowest
-SetupIconFile=icons/icon1.ico
+SetupIconFile=./icons/icon1.ico
 
 [Files]
-Source: "ps-commitzen-script.ps1"; DestDir: "{tmp}"; Flags: ignoreversion
-Source: "debug.bat"; DestDir: "{tmp}"; Flags: ignoreversion
+Source: "./ps-commitzen-script.ps1"; DestDir: "{tmp}"; Flags: ignoreversion
+Source: "./debug.bat"; DestDir: "{tmp}"; Flags: ignoreversion
 
 [Run]
 Filename: "{tmp}\debug.bat"; StatusMsg: "Executando script do PowerShell..."; Flags: runminimized
