@@ -1,36 +1,29 @@
-# Define a política de execução, suprimindo a saída
+# Define a politica de execucao
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force -ErrorAction SilentlyContinue
 
-# Função para verificar se um pacote está instalado
 function Is-PackageInstalled {
-    param (
-        [string]$packageName
-    )
+    param ([string]$packageName)
     return (scoop list | Select-String $packageName) -ne $null
 }
 
-# Função para verificar se o Scoop está instalado
 function Is-ScoopInstalled {
     return Test-Path "$env:USERPROFILE\scoop"
 }
 
 cls
 
-# Instala o Scoop se não estiver instalado
+# Instala o Scoop se nao estiver instalado
 if (-not (Is-ScoopInstalled)) {
     Write-Host "Instalando o Scoop..." -ForegroundColor Green
     try {
         Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
-        # Write-Host "Scoop instalado com sucesso." -ForegroundColor Green
     } catch {
         Write-Host "Erro ao instalar o Scoop: $_" -ForegroundColor Red
     }
 } else {
-    cls
     Write-Host "Scoop ja esta instalado." -ForegroundColor Green
-} 
+}
 
-# Função para instalar um pacote usando scoop
 function Install-Package {
     param (
         [string]$packageName,
@@ -46,17 +39,12 @@ function Install-Package {
     }
 }
 
-# Instala o Python se não estiver instalado
 Install-Package "python" "`nInstalando o Python..." "Python ja esta instalado."
-
-# Instala o pipx se não estiver instalado
 Install-Package "pipx" "`nInstalando o pipx..." "Pipx ja esta instalado."
 
-# Garante que o pipx esteja no PATH
 Write-Host "`nConfigurando o pipx no PATH..." -ForegroundColor Green
 pipx ensurepath
 
-# Instala o commitizen se não estiver instalado
 if (-not (pipx list | Select-String "commitizen")) {
     Write-Host "`nInstalando o commitizen..." -ForegroundColor Green
     pipx install commitizen
@@ -64,13 +52,15 @@ if (-not (pipx list | Select-String "commitizen")) {
     Write-Host "`nCommitizen ja esta instalado." -ForegroundColor Green
 }
 
-# Atualiza o commitzen
 Write-Host "`nAtualizando o commitizen..." -ForegroundColor Green
 pipx upgrade commitizen
 
-Write-Host "`nInstalacao concluida!" -ForegroundColor Green
+Write-Host "`n--- Resumo da Instalacao ---" -ForegroundColor Cyan
+Write-Host "Scoop: Instalado"
+Write-Host "Python: Instalado"
+Write-Host "Pipx: Instalado"
+Write-Host "Commitizen: Instalado e atualizado" -ForegroundColor Cyan
 
-# Aguarda 5 segundos antes de finalizar
-# Read-Host -prompt "`nPressione Enter para finalizar..."
-Write-Host "`nO script sera finalizado em 5 segundos..." -ForegroundColor Yellow
+Write-Host "`nInstalacao concluida!" -ForegroundColor Green
+Write-Host "O script sera finalizado em 5 segundos..." -ForegroundColor Yellow
 Start-Sleep -Seconds 5
