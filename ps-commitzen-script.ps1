@@ -9,25 +9,27 @@ function Is-PackageInstalled {
     return (scoop list | Select-String $packageName) -ne $null
 }
 
+cls
+
 # Instala o Scoop se não estiver instalado
 if (-not (Is-PackageInstalled "scoop")) {
-    Write-Host "`nInstalando o Scoop..." -ForegroundColor Green
+    Write-Host "Instalando o Scoop..." -ForegroundColor Green
     Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
 } else {
-    Write-Host "`nScoop já está instalado." -ForegroundColor Green
+    Write-Host "Scoop já está instalado." -ForegroundColor Green
 }
 
 # Instala o Python se não estiver instalado
 if (-not (Is-PackageInstalled "python")) {
-    Write-Host "`nInstalando o Python..." -ForegroundColor Green
+    Write-Host "`Instalando o Python..." -ForegroundColor Green
     scoop install python
 } else {
-    Write-Host "`nPython já está instalado." -ForegroundColor Green
+    Write-Host "`Python já está instalado." -ForegroundColor Green
 }
 
 # Instala o pipx se não estiver instalado
 if (-not (Is-PackageInstalled "pipx")) {
-    Write-Host "`nInstalando o pipx..." -ForegroundColor Green
+    Write-Host "`Instalando o pipx..." -ForegroundColor Green
     scoop install pipx
 } else {
     Write-Host "`npipx já está instalado." -ForegroundColor Green
@@ -39,17 +41,17 @@ pipx ensurepath
 
 # Instala o commitizen se não estiver instalado
 if (-not (pipx list | Select-String "commitizen")) {
-    Write-Host "`nInstalando o commitizen..." -ForegroundColor Green
+    Write-Host "`Instalando o commitizen..." -ForegroundColor Green
     pipx install commitizen
 } else {
-    Write-Host "`ncommitizen já está instalado." -ForegroundColor Green
+    Write-Host "`commitizen já está instalado." -ForegroundColor Green
 }
 
 # Atualiza o commitizen
-Write-Host "`nAtualizando o commitizen..." -ForegroundColor Green
+Write-Host "`Atualizando o commitizen..." -ForegroundColor Green
 pipx upgrade commitizen
 
-Write-Host "`nInstalacao concluida!" -ForegroundColor Green
+Write-Host "`Instalacao concluida!" -ForegroundColor Green
 
 # Espera por uma entrada do usuário antes de fechar
 Read-Host "Pressione Enter para sair..."
