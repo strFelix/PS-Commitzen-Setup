@@ -1,6 +1,6 @@
 [Setup]
 AppName=Commitzen
-AppVersion=3.2
+AppVersion=3.3
 DefaultDirName={userdocs}\commitzen
 DefaultGroupName=Commitzen
 OutputDir=../
@@ -9,7 +9,8 @@ Compression=lzma
 SolidCompression=yes
 PrivilegesRequired=lowest
 SetupIconFile=./icons/icon1.ico
-ShowLanguageDialog=yes 
+ShowLanguageDialog=yes
+WizardSmallImageFile=./icons/banner.bmp
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
