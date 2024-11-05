@@ -1,6 +1,6 @@
 [Setup]
-AppName=Commitzen Setup
-AppVersion=2.1
+AppName=Commitzen
+AppVersion=2.2
 DefaultDirName={userdocs}\commitzen
 DefaultGroupName=Commitzen
 OutputDir=./setup
@@ -14,33 +14,22 @@ Source: "ps-commitzen-script.ps1"; DestDir: "{tmp}"; Flags: ignoreversion
 Source: "debug.bat"; DestDir: "{tmp}"; Flags: ignoreversion
 
 [Run]
-Filename: "{tmp}\debug.bat"; StatusMsg: "Executando script do PowerShell..."; Flags: shellexec runminimized
+Filename: "{tmp}\debug.bat"; StatusMsg: "Executando script do PowerShell..."; Flags: runminimized
 
 [Code]
-const
-  ProgressBarStep = 10;
-
-var
-  Progress: Integer;
-
 procedure InitializeWizard;
 begin
-  Progress := 0;
-  WizardForm.ProgressGauge.Position := 0;
+  // Configura a barra de progresso para o estilo marquee (animação contínua)
   WizardForm.ProgressGauge.Style := npbstMarquee;
+  WizardForm.ProgressGauge.Position := 0; // Certifique-se de que a posição começa em 0
 end;
 
 procedure CurStepChanged(CurStep: TSetupStep);
 begin
   if CurStep = ssPostInstall then
   begin
-    WizardForm.ProgressGauge.Style := npbstNormal;
-    while Progress < 100 do
-    begin
-      Sleep(500); // Ajuste o tempo conforme necessário
-      Progress := Progress + ProgressBarStep;
-      WizardForm.ProgressGauge.Position := Progress;
-    end;
+    // A barra de progresso permanece em estilo marquee enquanto o script é executado
+    WizardForm.ProgressGauge.Style := npbstMarquee;
   end;
 end;
 
@@ -48,10 +37,13 @@ procedure CurStepFinished(CurStep: TSetupStep);
 begin
   if CurStep = ssPostInstall then
   begin
+    // Para a barra de progresso ao terminar e define para 100%
+    WizardForm.ProgressGauge.Style := npbstNormal;
     WizardForm.ProgressGauge.Position := 100;
   end;
 end;
 
 procedure DeinitializeSetup;
 begin
+  // Finaliza a barra de progresso
 end;

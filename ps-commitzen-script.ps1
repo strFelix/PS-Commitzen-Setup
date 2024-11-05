@@ -53,4 +53,4 @@ pipx upgrade commitizen
 Write-Host "`Instalacao concluida!" -ForegroundColor Green
 
 # Espera por uma entrada do usuário antes de fechar
-Read-Host "Pressione Enter para sair..."
+# Read-Host "Pressione Enter para sair..."
